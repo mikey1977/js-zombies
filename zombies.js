@@ -28,13 +28,20 @@ function Item (name) {
  * @param {number} damage   The weapon's damage.
  * @property {number} damage
  */
+function Weapon (name, damage) {
+  this.damage = damage; // adds property
+  Item.call(this, name); // call Item constructor and pass in Item constructor parameter
+}
+
+
+  // body...
 
 /**
  * Weapon Extends Item Class
  * -----------------------------
  */
 
-
+Weapon.prototype = Object.create(Item.prototype); //makes weapon an item
 
 /**
  * Class => Food(name, energy)
