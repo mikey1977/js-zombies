@@ -29,7 +29,7 @@ function Item (name) {
  * @property {number} damage
  */
 function Weapon (name, damage) {
-  this.damage = damage; // adds property
+  this.damage = damage; // adds public property (use variable to make private within scope)
   Item.call(this, name); // call Item constructor and pass in Item constructor parameter
 }
 
@@ -58,14 +58,17 @@ Weapon.prototype = Object.create(Item.prototype); //makes weapon an item
  * @param {number} energy     The energy the food provides.
  * @property {number} energy
  */
-
+function Food (name, energy) {
+  this.energy = energy;
+  Item.call(this, name); // call Item's constructor
+}
 
 /**
  * Food Extends Item Class
  * -----------------------------
  */
 
-
+Food.prototype = Object.create(Item.prototype);
 
 /**
  * Class => Player(name, health, strength, speed)
