@@ -41,7 +41,11 @@ function Weapon (name, damage) {
  * -----------------------------
  */
 
-Weapon.prototype = Object.create(Item.prototype); //makes weapon an item
+Weapon.prototype = Object.create(Item.prototype, {
+  constructor: {
+    value: Item
+  }
+}); //makes weapon an item
 
 /**
  * Class => Food(name, energy)
@@ -70,6 +74,8 @@ function Food (name, energy) {
 
 Food.prototype = Object.create(Item.prototype);
 
+
+
 /**
  * Class => Player(name, health, strength, speed)
  * -----------------------------
@@ -92,6 +98,26 @@ Food.prototype = Object.create(Item.prototype);
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
 
+function Player(name, health, strength, speed){
+  this.name = name;
+  this.health = health;
+  this.strength = strength;
+  this.speed = speed;
+  this.isAlive = true;
+  this.equipped = false;
+  this._pack = [];
+  this._maxHealth = health;
+
+}
+Player.prototype.getPack = function() { //getPack is a function associated with Player
+  return this._pack;
+
+}
+
+Player.prototype.getMaxHealth = function() {
+  return this._maxHealth;
+}
+
 
 /**
  * Player Class Method => checkPack()
@@ -104,7 +130,6 @@ Food.prototype = Object.create(Item.prototype);
  *
  * @name checkPack
  */
-
 
 /**
  * Player Class Method => takeItem(item)
@@ -123,8 +148,22 @@ Food.prototype = Object.create(Item.prototype);
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
+Player.prototype.takeItem = function(item) {
+  var packypack = this.getPack(); // assigns return value of method to variable
+  if (packypack.length >= 3 || packypack.length < 0) {
+    console.log("Your pack is full " + item + " could not be stored");
+    return false;
+  }
+// in order to add an item
+// need: to identify if item is an item that can be added (instanceof)
 
 
+    packypack.push(item);
+    console.log(this.name, item.name);
+    // item.push(this._pack);
+
+
+}
 /**
  * Player Class Method => discardItem(item)
  * -----------------------------
@@ -150,7 +189,9 @@ Food.prototype = Object.create(Item.prototype);
  * @param {Item/Weapon/Food} item   The item to discard.
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
+function discardItem(item) {
 
+}
 
 /**
  * Player Class Method => equip(itemToEquip)
