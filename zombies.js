@@ -131,8 +131,10 @@ Player.prototype.getMaxHealth = function() {
  * @name checkPack
  */
  Player.prototype.checkPack = function() {
-
+  console.log("Hellllllo", this.getPack());
  }
+
+
 /**
  * Player Class Method => takeItem(item)
  * -----------------------------
@@ -193,7 +195,7 @@ Player.prototype.takeItem = function(item) {
  */
 Player.prototype.discardItem = function(item) {
   var thisPack = this.getPack();
-  if (thisPack.indexOf(item) < 0) {
+  if (thisPack.indexOf(item) < 0) { //can't use this.getPack().indexOf b/c refers to function, not value of function
   console.log("Nothing discarded");
   return -1; // returns false
   } else {
@@ -221,7 +223,35 @@ Player.prototype.discardItem = function(item) {
  * @name equip
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
+Player.prototype.equip = function(itemToEquip) {
+  var thisPack = this.getPack();
 
+  if (thisPack.indexOf(itemToEquip) == -1) {
+    return false;
+  }
+// should only equip weapons (instanceof)
+// can only equip weapons from pack (checkPack)
+//is itemToEquip a weapon
+
+//instanceof determines if instance of class
+  if (itemToEquip instanceof Weapon) {
+    if (this.equipped === false) {
+      this.equipped = itemToEquip;
+      thisPack.splice(thisPack.indexOf(itemToEquip), 1);
+      return true;
+    } else {
+      thisPack.push(this.equipped);
+      this.equipped = itemToEquip;
+      thisPack.splice(thisPack.indexOf(itemToEquip), 1);
+      return true;
+    }
+  } else {
+    return false;
+  }
+  // // if (this.getPack instanceof this.Weapon) {
+  //    this.equip(itemToEquip);
+  // }
+}
 
 /**
  * Player Class Method => eat(itemToEat)
@@ -241,7 +271,6 @@ Player.prototype.discardItem = function(item) {
  * @name eat
  * @param {Food} itemToEat  The food item to eat.
  */
-
 
 /**
  * Player Class Method => useItem(item)
@@ -422,3 +451,10 @@ function runGame() {
   // console.log("After health: " + player.health);
   // player.checkPack();
 }
+var NewDude = new Player("Dude", 100, 50, 3);
+var Apple = new Food ("apple", 20);
+var Sword = new Weapon ("Nunchucks", 30);
+NewDude.takeItem(Apple);
+NewDude.takeItem(Sword);
+
+NewDude.checkPack();
