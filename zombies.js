@@ -105,7 +105,7 @@ function Player(name, health, strength, speed){
   this.speed = speed;
   this.isAlive = true;
   this.equipped = false;
-  this._pack = [];
+  this._pack = []; //all public:  var pack = []; --> private
   this._maxHealth = health;
 
 }
@@ -130,7 +130,9 @@ Player.prototype.getMaxHealth = function() {
  *
  * @name checkPack
  */
+ Player.prototype.checkPack = function() {
 
+ }
 /**
  * Player Class Method => takeItem(item)
  * -----------------------------
@@ -189,10 +191,17 @@ Player.prototype.takeItem = function(item) {
  * @param {Item/Weapon/Food} item   The item to discard.
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
-function discardItem(item) {
-
+Player.prototype.discardItem = function(item) {
+  var thisPack = this.getPack();
+  if (thisPack.indexOf(item) < 0) {
+  console.log("Nothing discarded");
+  return -1; // returns false
+  } else {
+  thisPack.splice(thisPack.indexOf(item), 1); // indexOf is a method
+  console.log(this.name + " discarded" + item);
+  return true;
 }
-
+}
 /**
  * Player Class Method => equip(itemToEquip)
  * -----------------------------
